@@ -83,7 +83,7 @@ export default function Quiz() {
 
   const handleMapClick = (stateName: string) => {
     if (quizType === "states") {
-      // For states quiz, check if clicked state matches the capital shown
+      // For states quiz, check if clicked state matches the state being asked about
       handleAnswer(stateName);
     } else {
       // For capitals quiz, find the state and check its capital
@@ -129,7 +129,7 @@ export default function Quiz() {
   }
   
   const questionText = quizType === "states" 
-    ? `What state has the capital ${currentItem.capital}?`
+    ? `What state is this?`
     : `What is the capital of ${currentItem.state}?`;
   
   const progressPercent = ((currentQuestion + 1) / totalQuestions) * 100;

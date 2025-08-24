@@ -8,58 +8,58 @@ interface InteractiveMapProps {
   hasAnswered: boolean;
 }
 
-// Approximate coordinates for US states on the map (as percentages)
+// More precise coordinates for US states on the map (smaller, more accurate clickable areas)
 const stateCoordinates: Record<string, { x: number; y: number; width: number; height: number }> = {
-  "Alabama": { x: 71, y: 65, width: 8, height: 12 },
-  "Alaska": { x: 8, y: 78, width: 15, height: 18 },
-  "Arizona": { x: 25, y: 58, width: 10, height: 12 },
-  "Arkansas": { x: 60, y: 58, width: 8, height: 10 },
-  "California": { x: 8, y: 38, width: 12, height: 20 },
-  "Colorado": { x: 40, y: 48, width: 10, height: 10 },
-  "Connecticut": { x: 87, y: 38, width: 4, height: 4 },
-  "Delaware": { x: 85, y: 48, width: 3, height: 6 },
-  "Florida": { x: 78, y: 78, width: 12, height: 15 },
-  "Georgia": { x: 75, y: 62, width: 8, height: 12 },
-  "Hawaii": { x: 18, y: 85, width: 8, height: 8 },
-  "Idaho": { x: 28, y: 28, width: 8, height: 15 },
-  "Illinois": { x: 62, y: 42, width: 6, height: 12 },
-  "Indiana": { x: 68, y: 42, width: 6, height: 10 },
-  "Iowa": { x: 55, y: 42, width: 8, height: 8 },
-  "Kansas": { x: 48, y: 52, width: 10, height: 8 },
-  "Kentucky": { x: 70, y: 52, width: 10, height: 6 },
-  "Louisiana": { x: 58, y: 72, width: 10, height: 10 },
-  "Maine": { x: 88, y: 25, width: 8, height: 15 },
-  "Maryland": { x: 82, y: 48, width: 6, height: 4 },
-  "Massachusetts": { x: 85, y: 35, width: 8, height: 4 },
-  "Michigan": { x: 65, y: 32, width: 12, height: 15 },
-  "Minnesota": { x: 52, y: 28, width: 8, height: 12 },
-  "Mississippi": { x: 63, y: 65, width: 6, height: 12 },
-  "Missouri": { x: 55, y: 50, width: 10, height: 10 },
-  "Montana": { x: 35, y: 25, width: 15, height: 10 },
-  "Nebraska": { x: 45, y: 45, width: 10, height: 8 },
-  "Nevada": { x: 20, y: 42, width: 8, height: 12 },
-  "New Hampshire": { x: 85, y: 28, width: 5, height: 8 },
-  "New Jersey": { x: 83, y: 42, width: 4, height: 8 },
-  "New Mexico": { x: 35, y: 58, width: 10, height: 12 },
-  "New York": { x: 78, y: 32, width: 10, height: 12 },
-  "North Carolina": { x: 78, y: 55, width: 12, height: 8 },
-  "North Dakota": { x: 45, y: 25, width: 10, height: 8 },
-  "Ohio": { x: 72, y: 45, width: 8, height: 10 },
-  "Oklahoma": { x: 50, y: 58, width: 12, height: 8 },
-  "Oregon": { x: 15, y: 32, width: 10, height: 8 },
-  "Pennsylvania": { x: 78, y: 42, width: 10, height: 8 },
-  "Rhode Island": { x: 88, y: 38, width: 2, height: 3 },
-  "South Carolina": { x: 78, y: 62, width: 8, height: 8 },
-  "South Dakota": { x: 45, y: 35, width: 10, height: 8 },
-  "Tennessee": { x: 70, y: 55, width: 12, height: 6 },
-  "Texas": { x: 42, y: 65, width: 18, height: 18 },
-  "Utah": { x: 30, y: 45, width: 8, height: 12 },
-  "Vermont": { x: 83, y: 25, width: 4, height: 10 },
-  "Virginia": { x: 78, y: 50, width: 10, height: 6 },
-  "Washington": { x: 18, y: 18, width: 12, height: 8 },
-  "West Virginia": { x: 75, y: 48, width: 6, height: 8 },
-  "Wisconsin": { x: 58, y: 32, width: 8, height: 12 },
-  "Wyoming": { x: 35, y: 35, width: 10, height: 10 }
+  "Alabama": { x: 72, y: 67, width: 4, height: 8 },
+  "Alaska": { x: 10, y: 80, width: 8, height: 10 },
+  "Arizona": { x: 26, y: 60, width: 6, height: 8 },
+  "Arkansas": { x: 61, y: 59, width: 5, height: 6 },
+  "California": { x: 10, y: 42, width: 6, height: 15 },
+  "Colorado": { x: 41, y: 50, width: 6, height: 6 },
+  "Connecticut": { x: 88, y: 39, width: 2, height: 2 },
+  "Delaware": { x: 85, y: 49, width: 1.5, height: 3 },
+  "Florida": { x: 80, y: 80, width: 6, height: 8 },
+  "Georgia": { x: 76, y: 64, width: 4, height: 8 },
+  "Hawaii": { x: 20, y: 87, width: 4, height: 4 },
+  "Idaho": { x: 29, y: 30, width: 4, height: 10 },
+  "Illinois": { x: 63, y: 44, width: 3, height: 8 },
+  "Indiana": { x: 69, y: 44, width: 3, height: 6 },
+  "Iowa": { x: 56, y: 44, width: 4, height: 5 },
+  "Kansas": { x: 49, y: 54, width: 6, height: 4 },
+  "Kentucky": { x: 71, y: 53, width: 6, height: 3 },
+  "Louisiana": { x: 59, y: 74, width: 5, height: 6 },
+  "Maine": { x: 89, y: 27, width: 4, height: 10 },
+  "Maryland": { x: 83, y: 49, width: 3, height: 2 },
+  "Massachusetts": { x: 86, y: 36, width: 4, height: 2 },
+  "Michigan": { x: 66, y: 34, width: 6, height: 10 },
+  "Minnesota": { x: 53, y: 30, width: 4, height: 8 },
+  "Mississippi": { x: 64, y: 67, width: 3, height: 8 },
+  "Missouri": { x: 56, y: 52, width: 5, height: 6 },
+  "Montana": { x: 36, y: 27, width: 8, height: 6 },
+  "Nebraska": { x: 46, y: 47, width: 6, height: 4 },
+  "Nevada": { x: 21, y: 45, width: 4, height: 8 },
+  "New Hampshire": { x: 86, y: 30, width: 2.5, height: 5 },
+  "New Jersey": { x: 84, y: 44, width: 2, height: 4 },
+  "New Mexico": { x: 36, y: 60, width: 6, height: 8 },
+  "New York": { x: 79, y: 34, width: 5, height: 8 },
+  "North Carolina": { x: 79, y: 56, width: 8, height: 4 },
+  "North Dakota": { x: 46, y: 27, width: 6, height: 4 },
+  "Ohio": { x: 73, y: 47, width: 4, height: 6 },
+  "Oklahoma": { x: 51, y: 60, width: 8, height: 4 },
+  "Oregon": { x: 16, y: 34, width: 6, height: 4 },
+  "Pennsylvania": { x: 79, y: 44, width: 6, height: 4 },
+  "Rhode Island": { x: 88, y: 39, width: 1, height: 1.5 },
+  "South Carolina": { x: 79, y: 63, width: 4, height: 4 },
+  "South Dakota": { x: 46, y: 37, width: 6, height: 4 },
+  "Tennessee": { x: 71, y: 56, width: 8, height: 3 },
+  "Texas": { x: 44, y: 67, width: 12, height: 12 },
+  "Utah": { x: 31, y: 47, width: 4, height: 8 },
+  "Vermont": { x: 84, y: 27, width: 2, height: 6 },
+  "Virginia": { x: 79, y: 51, width: 6, height: 3 },
+  "Washington": { x: 19, y: 20, width: 8, height: 4 },
+  "West Virginia": { x: 76, y: 49, width: 3, height: 5 },
+  "Wisconsin": { x: 59, y: 34, width: 4, height: 8 },
+  "Wyoming": { x: 36, y: 37, width: 6, height: 6 }
 };
 
 export function InteractiveMap({ currentQuestion, onStateClick, quizType, hasAnswered }: InteractiveMapProps) {
@@ -144,9 +144,9 @@ export function InteractiveMap({ currentQuestion, onStateClick, quizType, hasAns
       
       <div className="mt-4 text-center">
         <p className="text-muted-foreground">
-          Click on {quizType === "states" ? "the state" : "the state whose capital is"}{" "}
+          Click on {" "}
           <span className="font-semibold text-primary">
-            {quizType === "states" ? currentQuestion.capital : currentQuestion.state}
+            {quizType === "states" ? currentQuestion.state : `the state whose capital is ${currentQuestion.capital}`}
           </span>
         </p>
       </div>
