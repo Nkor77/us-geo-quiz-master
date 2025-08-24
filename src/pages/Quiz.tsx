@@ -6,6 +6,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, RotateCcw } from "lucide-react";
 import { usStatesCapitals, StateCapital } from "@/data/usStatesCapitals";
+import { InteractiveMap } from "@/components/InteractiveMap";
+import { getStateImage, getCapitalImage } from "@/data/stateImages";
 import { useToast } from "@/hooks/use-toast";
 
 type QuizType = "states" | "capitals";
@@ -76,6 +78,19 @@ export default function Quiz() {
       setTimeout(() => {
         setHasAnswered(false);
       }, 2000);
+    }
+  };
+
+  const handleMapClick = (stateName: string) => {
+    if (quizType === "states") {
+      // For states quiz, check if clicked state matches the capital shown
+      handleAnswer(stateName);
+    } else {
+      // For capitals quiz, find the state and check its capital
+      const clickedState = usStatesCapitals.find(item => item.state === stateName);
+      if (clickedState) {
+        handleAnswer(clickedState.capital);
+      }
     }
   };
   
@@ -167,54 +182,61 @@ export default function Quiz() {
         
         {/* Question */}
         <Card className="p-8 mb-6 bg-white/95 backdrop-blur-sm shadow-quiz">
-          <h2 className="text-3xl font-bold text-center mb-8 text-primary">
-            {questionText}
-          </h2>
-          
           {gameMode === "multiple-choice" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {currentOptions.map((option, index) => {
-                const correctAnswer = quizType === "states" ? currentItem.state : currentItem.capital;
-                const isCorrect = option === correctAnswer;
-                const buttonVariant = hasAnswered 
-                  ? (isCorrect ? "default" : "outline")
-                  : "outline";
-                const buttonClass = hasAnswered
-                  ? (isCorrect 
-                      ? "bg-success hover:bg-success text-success-foreground border-success" 
-                      : "")
-                  : "hover:bg-primary/10 hover:border-primary";
-                  
-                return (
-                  <Button
-                    key={option}
-                    variant={buttonVariant}
-                    size="lg"
-                    className={`p-6 h-auto text-left justify-start transition-all duration-300 ${buttonClass}`}
-                    onClick={() => handleAnswer(option)}
-                    disabled={hasAnswered}
-                  >
-                    <span className="text-lg font-medium">{option}</span>
-                  </Button>
-                );
-              })}
-            </div>
+            <>
+              {/* Question with Image */}
+              <div className="text-center mb-8">
+                <div className="mb-6">
+                  <img 
+                    src={quizType === "capitals" ? getStateImage(currentItem.state) : getCapitalImage(currentItem.state)}
+                    alt={quizType === "capitals" ? currentItem.state : currentItem.capital}
+                    className="w-64 h-48 object-cover rounded-lg mx-auto shadow-md"
+                  />
+                </div>
+                <h2 className="text-3xl font-bold text-primary">
+                  {questionText}
+                </h2>
+              </div>
+
+              {/* Multiple Choice Options */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {currentOptions.map((option, index) => {
+                  const correctAnswer = quizType === "states" ? currentItem.state : currentItem.capital;
+                  const isCorrect = option === correctAnswer;
+                  const buttonVariant = hasAnswered 
+                    ? (isCorrect ? "default" : "outline")
+                    : "outline";
+                  const buttonClass = hasAnswered
+                    ? (isCorrect 
+                        ? "bg-success hover:bg-success text-success-foreground border-success" 
+                        : "")
+                    : "hover:bg-primary/10 hover:border-primary";
+                    
+                  return (
+                    <Button
+                      key={option}
+                      variant={buttonVariant}
+                      size="lg"
+                      className={`p-6 h-auto text-left justify-start transition-all duration-300 ${buttonClass}`}
+                      onClick={() => handleAnswer(option)}
+                      disabled={hasAnswered}
+                    >
+                      <span className="text-lg font-medium">{option}</span>
+                    </Button>
+                  );
+                })}
+              </div>
+            </>
           )}
           
           {gameMode === "map" && (
-            <div className="text-center">
-              <div className="bg-muted/50 rounded-lg p-8 mb-4">
-                <p className="text-muted-foreground mb-4">Map mode coming soon!</p>
-                <p className="text-sm text-muted-foreground">
-                  Click on the map to select states and capitals
-                </p>
-              </div>
-              <Button 
-                onClick={() => navigate(`/quiz?type=${quizType}&mode=multiple-choice`)}
-                variant="outline"
-              >
-                Switch to Multiple Choice
-              </Button>
+            <div>
+              <InteractiveMap
+                currentQuestion={currentItem}
+                onStateClick={handleMapClick}
+                quizType={quizType}
+                hasAnswered={hasAnswered}
+              />
             </div>
           )}
         </Card>
